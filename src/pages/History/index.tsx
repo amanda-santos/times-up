@@ -1,6 +1,8 @@
 import { ReactElement } from 'react'
-import { useCyclesContext } from '../../hooks/useCyclesContext'
+import { formatDistanceToNow } from 'date-fns'
 
+import { useCyclesContext } from '../../hooks/useCyclesContext'
+import { Cycle } from '../../types'
 import { HistoryContainer, HistoryList, Status } from './styles'
 
 export const History = (): ReactElement => {
@@ -8,77 +10,50 @@ export const History = (): ReactElement => {
 
   return (
     <HistoryContainer>
-      <h1>Meu histórico</h1>
-
-      <pre>{JSON.stringify(cycles, null, 2)}</pre>
+      <h1>My history</h1>
 
       <HistoryList>
         <table>
           <thead>
             <tr>
-              <th>Tarefa</th>
-              <th>Duração</th>
-              <th>Duração</th>
+              <th>Task</th>
+              <th>Duration</th>
+              <th>Started at</th>
               <th>Status</th>
             </tr>
           </thead>
           <tbody>
-            <tr>
-              <td>Tarefa</td>
-              <td>20 minutos</td>
-              <td>Há 2 meses</td>
-              <td>
-                <Status $color="green">Done</Status>
-              </td>
-            </tr>
-            <tr>
-              <td>Tarefa</td>
-              <td>20 minutos</td>
-              <td>Há 2 meses</td>
-              <td>
-                <Status $color="green">Done</Status>
-              </td>
-            </tr>
-            <tr>
-              <td>Tarefa</td>
-              <td>20 minutos</td>
-              <td>Há 2 meses</td>
-              <td>
-                <Status $color="yellow">In progress</Status>
-              </td>
-            </tr>
-            <tr>
-              <td>Tarefa</td>
-              <td>20 minutos</td>
-              <td>Há 2 meses</td>
-              <td>
-                <Status $color="yellow">In progress</Status>
-              </td>
-            </tr>
-            <tr>
-              <td>Tarefa</td>
-              <td>20 minutos</td>
-              <td>Há 2 meses</td>
-              <td>
-                <Status $color="red">To be done</Status>
-              </td>
-            </tr>
-            <tr>
-              <td>Tarefa</td>
-              <td>20 minutos</td>
-              <td>Há 2 meses</td>
-              <td>
-                <Status $color="green">Done</Status>
-              </td>
-            </tr>
-            <tr>
-              <td>Tarefa</td>
-              <td>20 minutos</td>
-              <td>Há 2 meses</td>
-              <td>
-                <Status $color="red">To be done</Status>
-              </td>
-            </tr>
+            {cycles.map(
+              ({
+                id,
+                minutesAmount,
+                startDate,
+                task,
+                finishedDate,
+                interruptedDate,
+              }: Cycle) => (
+                <tr key={id}>
+                  <td>{task}</td>
+                  <td>{minutesAmount} minutes</td>
+                  <td>
+                    {formatDistanceToNow(startDate, {
+                      addSuffix: true,
+                    })}
+                  </td>
+                  <td>
+                    {finishedDate && <Status $color="green">Done</Status>}
+
+                    {interruptedDate && (
+                      <Status $color="red">Interrupted</Status>
+                    )}
+
+                    {!finishedDate && !interruptedDate && (
+                      <Status $color="yellow">In progress</Status>
+                    )}
+                  </td>
+                </tr>
+              ),
+            )}
           </tbody>
         </table>
       </HistoryList>
