@@ -36,7 +36,7 @@ export const History = (): ReactElement => {
                   <td>{task}</td>
                   <td>{minutesAmount} minutes</td>
                   <td>
-                    {formatDistanceToNow(startDate, {
+                    {formatDistanceToNow(new Date(startDate), {
                       addSuffix: true,
                     })}
                   </td>
