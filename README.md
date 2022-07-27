@@ -50,9 +50,9 @@ Technologies used to develop this project:
 
 ## 🖥 Preview
 
+https://user-images.githubusercontent.com/49074930/181391307-df34caf5-6e21-46d4-af36-2a701aaa12ae.mp4
+
 Click <a href="https://times-up.vercel.app/">here</a> to see it live 📺
-
-
 
 ## 🤔 How to contribute
 
